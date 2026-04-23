@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -27,9 +28,10 @@ const CATEGORIES = [
 ]
 
 export default function HomeNavbar() {
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false)
+  const router = useRouter()
+  const [searchTerm, setSearchTerm] = React.useState("")
   const [placeholder, setPlaceholder] = React.useState("")
-  const fullText = "What kind of idea do you want to choose?"
+  const fullText = "Search for brilliant ideas..."
 
   // Typing animation effect
   React.useEffect(() => {
@@ -38,9 +40,16 @@ export default function HomeNavbar() {
       setPlaceholder(fullText.slice(0, i))
       i++
       if (i > fullText.length) i = 0
-    }, 100)
+    }, 150)
     return () => clearInterval(interval)
   }, [])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchTerm.trim()) {
+      router.push(`/ideas?q=${encodeURIComponent(searchTerm.trim())}`)
+    }
+  }
 
   return (
     <header className="w-full px-4 py-8 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-visible">
@@ -66,42 +75,23 @@ export default function HomeNavbar() {
 
         {/* Center: Search & Nav Links */}
         <div className="flex items-center gap-4 flex-1 justify-center px-8">
-          {/* Animated Searchbar with Dropdown */}
-          <div className="relative group max-w-md w-full">
-            <div
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-sky-500/50 cursor-pointer transition-all duration-300"
-            >
+          {/* Functional Searchbar */}
+          <form onSubmit={handleSearch} className="relative group max-w-md w-full">
+            <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus-within:border-sky-500/50 focus-within:ring-2 focus-within:ring-sky-500/20 transition-all duration-300">
               <Search className="w-4 h-4 text-slate-500" />
-              <div className="text-slate-600 dark:text-zinc-400 text-sm overflow-hidden whitespace-nowrap border-r-2 border-sky-500 pr-1 animate-pulse min-w-[20px]">
-                {placeholder || " "}
-              </div>
-              <ChevronDown className={cn("w-4 h-4 text-slate-500 transition-transform ml-auto", isSearchOpen && "rotate-180")} />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder={placeholder}
+                className="bg-transparent border-none outline-none text-sm text-slate-900 dark:text-white w-full placeholder:text-slate-400"
+              />
             </div>
-
-            <AnimatePresence>
-              {isSearchOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute top-full left-0 right-0 mt-3 p-2 bg-white dark:bg-zinc-900/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl z-50"
-                >
-                  <div className="p-2 text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest px-4">Categories</div>
-                  {CATEGORIES.map((cat) => (
-                    <button key={cat.name} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors text-slate-700 dark:text-zinc-300 hover:text-sky-600 dark:hover:text-white group">
-                      {cat.icon}
-                      <span className="text-sm font-medium">{cat.name}</span>
-                      <Rocket className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 text-sky-500 transition-all" />
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          </form>
 
           <NavigationMenu className="hidden xl:flex">
             <NavigationMenuList className="gap-1">
+              <NavItem href="/ideas" icon={<Zap className="w-4 h-4 text-yellow-500" />}>Ideas</NavItem>
               <NavItem href="/about" icon={<Info className="w-4 h-4 text-sky-500" />}>About</NavItem>
               <NavItem href="/contact" icon={<Mail className="w-4 h-4 text-indigo-500" />}>Contact Us</NavItem>
             </NavigationMenuList>
