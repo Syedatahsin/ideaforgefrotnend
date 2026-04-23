@@ -1,4 +1,5 @@
 import HomeNavbar from "@/components/ui/home-navbar";
+import Footer from "@/components/ui/footer";
 
 export default function PublicLayout({
   children,
@@ -9,7 +10,7 @@ export default function PublicLayout({
     <div className="flex flex-col min-h-screen">
       <HomeNavbar />
       <main className="flex-grow">{children}</main>
-      {/* Add Public Footer here */}
+      <Footer />
     </div>
   );
 }
