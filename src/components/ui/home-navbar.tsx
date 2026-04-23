@@ -86,6 +86,13 @@ export default function HomeNavbar() {
                 placeholder={placeholder}
                 className="bg-transparent border-none outline-none text-sm text-slate-900 dark:text-white w-full placeholder:text-slate-400"
               />
+              <Button 
+                type="submit" 
+                size="sm" 
+                className="h-8 w-8 rounded-full bg-sky-500 hover:bg-sky-600 text-white p-0 flex items-center justify-center transition-all active:scale-90 shadow-sm shadow-sky-500/20"
+              >
+                <ArrowUpRight className="w-4 h-4" />
+              </Button>
             </div>
           </form>
 
