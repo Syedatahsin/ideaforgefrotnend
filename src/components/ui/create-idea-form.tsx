@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Field as UIField, FieldLabel } from "@/components/ui/field";
 import { Loader2, Rocket, Lightbulb, DollarSign, Tags } from "lucide-react";
 
 export function CreateIdeaForm() {
