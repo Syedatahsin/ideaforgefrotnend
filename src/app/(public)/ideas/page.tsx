@@ -84,37 +84,42 @@ function IdeasContent() {
             className="flex items-center gap-2 text-sky-500 font-bold tracking-widest uppercase text-xs"
           >
             <Sparkles className="w-4 h-4" />
-            Discover Brilliance
+            {query ? "Search Results" : "Discover Brilliance"}
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white"
           >
-            Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600 italic">Innovations</span>
+            {query ? `Results for "${query}"` : <>Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600 italic">Innovations</span></>}
           </motion.h1>
           <p className="text-slate-500 dark:text-slate-400 max-w-xl text-lg font-medium">
-            Browse through the latest ideas forged by creators worldwide. Find your next inspiration or investment.
+            {query 
+              ? `We found ${ideas.length} ideas matching your search across all categories.`
+              : "Browse through the latest ideas forged by creators worldwide. Find your next inspiration or investment."
+            }
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
-            {["all", "Tech", "AI", "Design"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-                  activeTab === tab 
-                    ? "bg-white dark:bg-slate-800 text-sky-500 shadow-md" 
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
+        {!query && (
+          <div className="flex items-center gap-4">
+            <div className="flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+              {["all", "Tech", "AI", "Design"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+                    activeTab === tab 
+                      ? "bg-white dark:bg-slate-800 text-sky-500 shadow-md" 
+                      : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Grid Section */}
