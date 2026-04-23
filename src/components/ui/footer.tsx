@@ -16,19 +16,9 @@ const Footer = () => {
     {
       title: "Platform",
       links: [
-        { name: "Explore Ideas", href: "/explore" },
+        { name: "Explore Ideas", href: "/ideas" },
         { name: "How it Works", href: "/about" },
-        { name: "Categories", href: "/#categories" },
-        { name: "Premium", href: "/premium" },
-      ]
-    },
-    {
-      title: "Community",
-      links: [
-        { name: "About Us", href: "/about" },
-        { name: "Contact", href: "/contact" },
-        { name: "Creators", href: "/creators" },
-        { name: "Guidelines", href: "/guidelines" },
+        { name: "Contact Us", href: "/contact" },
       ]
     },
     {
@@ -36,7 +26,6 @@ const Footer = () => {
       links: [
         { name: "Privacy Policy", href: "/privacy" },
         { name: "Terms of Service", href: "/terms" },
-        { name: "Cookie Policy", href: "/cookies" },
       ]
     }
   ]
@@ -55,7 +44,7 @@ const Footer = () => {
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-indigo-400/5 dark:bg-indigo-500/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
           {/* Logo and About Section */}
           <div className="lg:col-span-2 space-y-6">
@@ -119,11 +108,8 @@ const Footer = () => {
           </div>
           <div className="flex items-center gap-8 text-sm">
             <span className="flex items-center gap-2 text-slate-500 dark:text-slate-500">
-              <Zap className="w-4 h-4 text-sky-500" /> Powered by Brilliance
+              <Zap className="w-4 h-4 text-sky-500" /> Powered by <span className="text-slate-900 dark:text-white font-bold">Anika</span>
             </span>
-            <Link href="/contact" className="text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors">
-              Support Center
-            </Link>
           </div>
         </div>
       </div>
