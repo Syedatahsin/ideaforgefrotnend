@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   Sparkles, Info, Mail, UserPlus, LogIn,
   Lightbulb, Search, ChevronDown, Rocket,
-  Zap, Brain, Target
+  Zap, Brain, Target, ArrowUpRight
 } from "lucide-react"
 import {
   NavigationMenu,
