@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import {
-  Sparkles, Info, Mail, UserPlus, LogIn,
-  Lightbulb, Search, ChevronDown, Rocket,
+  Sparkles, Info, Mail, LogIn,
+  Lightbulb, Search, Rocket,
   Zap, Brain, Target, ArrowUpRight
 } from "lucide-react"
 import {
@@ -22,12 +22,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
-const CATEGORIES = [
-  { name: "Tech Ventures", icon: <Zap className="w-4 h-4 text-yellow-400" /> },
-  { name: "Creative Arts", icon: <Sparkles className="w-4 h-4 text-purple-400" /> },
-  { name: "AI & ML", icon: <Brain className="w-4 h-4 text-blue-400" /> },
-  { name: "Sustainability", icon: <Target className="w-4 h-4 text-green-400" /> },
-]
+
 
 export default function HomeNavbar() {
   const router = useRouter()

@@ -2,11 +2,9 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { 
-  Lightbulb, Github, Linkedin, Mail, 
-  ArrowUpRight, Globe, Code2, Zap,
-  Twitter, Instagram, Facebook
+  Lightbulb, Mail, 
+  ArrowUpRight, Globe, Code2, Zap
 } from 'lucide-react'
 
 const Footer = () => {

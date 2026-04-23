@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Field as UIField, FieldLabel } from "@/components/ui/field";
+import { FieldLabel } from "@/components/ui/field";
 import { Loader2, Rocket, Lightbulb, DollarSign, Tags } from "lucide-react";
 
 export function CreateIdeaForm() {
@@ -24,7 +24,7 @@ export function CreateIdeaForm() {
       .then(data => {
         if (data.success) setCategories(data.data);
       })
-      .catch(err => console.error("Error fetching categories:", err));
+      .catch(() => console.error("Error fetching categories"));
   }, []);
 
   const form = useForm({
@@ -57,7 +57,7 @@ export function CreateIdeaForm() {
         } else {
           toast.error(data.message || "Failed to create idea");
         }
-      } catch (error) {
+      } catch {
         toast.error("Something went wrong. Please try again.");
       } finally {
         setIsSubmitting(false);
@@ -87,9 +87,8 @@ export function CreateIdeaForm() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {/* Title */}
-          <form.Field
-            name="title"
-            children={(field) => (
+          <form.Field name="title">
+            {(field) => (
               <div className="space-y-2 md:col-span-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Idea Title</FieldLabel>
                 <Input
@@ -101,12 +100,11 @@ export function CreateIdeaForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Category */}
-          <form.Field
-            name="categoryId"
-            children={(field) => (
+          <form.Field name="categoryId">
+            {(field) => (
               <div className="space-y-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Category</FieldLabel>
                 <select
@@ -122,12 +120,11 @@ export function CreateIdeaForm() {
                 </select>
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Price */}
-          <form.Field
-            name="price"
-            children={(field) => (
+          <form.Field name="price">
+            {(field) => (
               <div className="space-y-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Estimated Price ($)</FieldLabel>
                 <div className="relative">
@@ -142,12 +139,11 @@ export function CreateIdeaForm() {
                 </div>
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Problem Statement */}
-          <form.Field
-            name="problemStatement"
-            children={(field) => (
+          <form.Field name="problemStatement">
+            {(field) => (
               <div className="space-y-2 md:col-span-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">The Problem</FieldLabel>
                 <Textarea
@@ -159,12 +155,11 @@ export function CreateIdeaForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Solution */}
-          <form.Field
-            name="solution"
-            children={(field) => (
+          <form.Field name="solution">
+            {(field) => (
               <div className="space-y-2 md:col-span-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">The Solution</FieldLabel>
                 <Textarea
@@ -176,12 +171,11 @@ export function CreateIdeaForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Full Description */}
-          <form.Field
-            name="description"
-            children={(field) => (
+          <form.Field name="description">
+            {(field) => (
               <div className="space-y-2 md:col-span-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Full Description</FieldLabel>
                 <Textarea
@@ -193,12 +187,11 @@ export function CreateIdeaForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
           {/* Tags */}
-          <form.Field
-            name="tags"
-            children={(field) => (
+          <form.Field name="tags">
+            {(field) => (
               <div className="space-y-2 md:col-span-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Tags (comma separated)</FieldLabel>
                 <div className="relative">
@@ -213,7 +206,7 @@ export function CreateIdeaForm() {
                 </div>
               </div>
             )}
-          />
+          </form.Field>
 
           <Button 
             type="submit" 

@@ -147,7 +147,7 @@ function IdeasContent() {
           </div>
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">No ideas found</h3>
           <p className="text-slate-500 dark:text-slate-400">
-            We couldn't find any ideas matching "{query}". Try a different keyword.
+            We couldn&apos;t find any ideas matching &quot;{query}&quot;. Try a different keyword.
           </p>
         </div>
       )}

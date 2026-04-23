@@ -26,7 +26,6 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function LoginForm(props: React.ComponentProps<typeof Card>) {
-  const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
   // Session hydration guard and automatic redirect
@@ -34,7 +33,9 @@ export function LoginForm(props: React.ComponentProps<typeof Card>) {
     if (isPending) return; 
     if (!session?.user) return;
 
-    const role = (session.user as any).role;
+    // Type casting to handle custom role field in session user
+    const user = session.user as { role?: string };
+    const role = user.role;
 
     if (role === "ADMIN") window.location.replace("/admin");
     else if (role === "TUTOR") window.location.replace("/teacher");
@@ -65,7 +66,10 @@ export function LoginForm(props: React.ComponentProps<typeof Card>) {
 
         // Hard navigation to ensure fresh layout/role loading
         const { data: currentSession } = await authClient.getSession();
-        const activeRole = (currentSession?.user as any)?.role || (res?.data?.user as any)?.role;
+        
+        const sessionUser = currentSession?.user as { role?: string } | undefined;
+        const resUser = res?.data?.user as { role?: string } | undefined;
+        const activeRole = sessionUser?.role || resUser?.role;
         
         if (activeRole === "ADMIN") {
           window.location.href = "/admin";
@@ -167,7 +171,7 @@ export function LoginForm(props: React.ComponentProps<typeof Card>) {
           Enter Workspace
         </Button>
         <p className="text-xs text-center text-slate-500 dark:text-slate-400">
-          Don't have an account? <Link href="/register" className="text-sky-500 font-bold hover:underline">Sign up for free</Link>
+          Don&apos;t have an account? <Link href="/register" className="text-sky-500 font-bold hover:underline">Sign up for free</Link>
         </p>
       </CardFooter>
     </Card>

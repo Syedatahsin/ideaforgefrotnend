@@ -16,13 +16,13 @@ export default function VerifyEmailPage() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (!token) {
-      setStatus("error");
-      setMessage("Missing verification token.");
-      return;
-    }
-
     const verify = async () => {
+      if (!token) {
+        setStatus("error");
+        setMessage("Missing verification token.");
+        return;
+      }
+
       try {
         const { error } = await authClient.verifyEmail({
           query: { token }

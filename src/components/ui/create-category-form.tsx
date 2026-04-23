@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Field as UIField, FieldLabel } from "@/components/ui/field";
+import { FieldLabel } from "@/components/ui/field";
 import { Loader2, Plus, Tag } from "lucide-react";
 
 export function CreateCategoryForm() {
@@ -42,7 +42,7 @@ export function CreateCategoryForm() {
         } else {
           toast.error(data.message || "Failed to create category");
         }
-      } catch (error) {
+      } catch {
         toast.error("Something went wrong. Please try again.");
       } finally {
         setIsSubmitting(false);
@@ -72,9 +72,8 @@ export function CreateCategoryForm() {
           }}
           className="space-y-6"
         >
-          <form.Field
-            name="name"
-            children={(field) => (
+          <form.Field name="name">
+            {(field) => (
               <div className="space-y-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Category Name</FieldLabel>
                 <Input
@@ -91,11 +90,10 @@ export function CreateCategoryForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
-          <form.Field
-            name="slug"
-            children={(field) => (
+          <form.Field name="slug">
+            {(field) => (
               <div className="space-y-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Slug (URL identifier)</FieldLabel>
                 <Input
@@ -108,11 +106,10 @@ export function CreateCategoryForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
-          <form.Field
-            name="description"
-            children={(field) => (
+          <form.Field name="description">
+            {(field) => (
               <div className="space-y-2">
                 <FieldLabel className="text-xs font-bold uppercase tracking-widest text-slate-500">Description</FieldLabel>
                 <Textarea
@@ -125,7 +122,7 @@ export function CreateCategoryForm() {
                 />
               </div>
             )}
-          />
+          </form.Field>
 
           <Button 
             type="submit" 

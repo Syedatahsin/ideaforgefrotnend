@@ -22,7 +22,7 @@ const ContactUs = () => {
           >
             <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Get in Touch</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-8">
-              Have a question about IdeaForge? Send us a message and we'll get back to you shortly.
+              Have a question about IdeaForge? Send us a message and we&apos;ll get back to you shortly.
             </p>
 
             <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6 flex-grow flex flex-col justify-between">
@@ -88,7 +88,7 @@ const ContactUs = () => {
               Contact Details
             </div>
             <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">
-              Let's build something <span className="text-sky-500">great</span> together.
+              Let&apos;s build something <span className="text-sky-500">great</span> together.
             </h2>
             
             <div className="space-y-8 mt-10">
