@@ -30,18 +30,25 @@ interface Idea {
 function IdeasContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
-  const initialCategory = searchParams.get("categoryId") || "";
+  const categoryId = searchParams.get("categoryId") || "";
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(initialCategory || "all");
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     const fetchIdeas = async () => {
       setLoading(true);
       try {
         const url = new URL("http://localhost:5000/api/ideas");
-        if (query) url.searchParams.append("searchTerm", query);
-        if (initialCategory) url.searchParams.append("categoryId", initialCategory);
+        
+        // If there's a query, we search across ALL categories as requested
+        if (query) {
+          url.searchParams.append("searchTerm", query);
+          setActiveTab("all"); // Reset tab to 'all' for global search
+        } else if (categoryId) {
+          url.searchParams.append("categoryId", categoryId);
+          setActiveTab(categoryId);
+        }
         
         const response = await fetch(url.toString());
         const data = await response.json();
@@ -56,12 +63,9 @@ function IdeasContent() {
     };
 
     fetchIdeas();
-  }, [query, initialCategory]);
+  }, [query, categoryId]);
 
-  // If there's an initial category, the backend already filtered it. 
-  // If the user uses the tabs, we filter locally or re-fetch.
-  // For now, let's keep the tabs as a local filter or sub-filter.
-  const filteredIdeas = activeTab === "all" || activeTab === initialCategory
+  const filteredIdeas = activeTab === "all" || query 
     ? ideas 
     : ideas.filter(idea => 
         idea.category.name.toLowerCase().includes(activeTab.toLowerCase()) || 
