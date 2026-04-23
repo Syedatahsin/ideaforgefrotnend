@@ -111,12 +111,16 @@ export default function HomeNavbar() {
         {/* Auth Actions */}
         <div className="flex items-center gap-2 shrink-0">
           <ThemeToggle />
-          <Button variant="ghost" className="text-slate-600 dark:text-zinc-400 hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-full hidden sm:flex">
-            <LogIn className="w-4 h-4 mr-2" /> Login
-          </Button>
-          <Button className="relative overflow-hidden rounded-full bg-sky-600 text-white font-bold hover:bg-sky-700 transition-all duration-300 shadow-md hover:shadow-sky-500/40">
-            SIGNUP
-          </Button>
+          <Link href="/login">
+            <Button variant="ghost" className="text-slate-600 dark:text-zinc-400 hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-full hidden sm:flex">
+              <LogIn className="w-4 h-4 mr-2" /> Login
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button className="relative overflow-hidden rounded-full bg-sky-600 text-white font-bold hover:bg-sky-700 transition-all duration-300 shadow-md hover:shadow-sky-500/40">
+              SIGNUP
+            </Button>
+          </Link>
         </div>
       </motion.nav>
     </header>
