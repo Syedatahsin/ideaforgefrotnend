@@ -30,8 +30,19 @@ const CATEGORIES = [
 export default function HomeNavbar() {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = React.useState("")
+  const [categories, setCategories] = React.useState<{ id: string; name: string; slug: string }[]>([])
   const [placeholder, setPlaceholder] = React.useState("")
-  const fullText = "Search for brilliant ideas..."
+  const fullText = "Search all ideas..."
+
+  // Fetch Categories
+  React.useEffect(() => {
+    fetch("http://localhost:5000/api/categories")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setCategories(data.data)
+      })
+      .catch(err => console.error("Error fetching categories:", err))
+  }, [])
 
   // Typing animation effect
   React.useEffect(() => {
@@ -75,7 +86,7 @@ export default function HomeNavbar() {
 
         {/* Center: Search & Nav Links */}
         <div className="flex items-center gap-4 flex-1 justify-center px-8">
-          {/* Functional Searchbar */}
+          {/* Functional Searchbar (INDEPENDENT) */}
           <form onSubmit={handleSearch} className="relative group max-w-md w-full">
             <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus-within:border-sky-500/50 focus-within:ring-2 focus-within:ring-sky-500/20 transition-all duration-300">
               <Search className="w-4 h-4 text-slate-500" />
@@ -98,7 +109,42 @@ export default function HomeNavbar() {
 
           <NavigationMenu className="hidden xl:flex">
             <NavigationMenuList className="gap-1">
-              <NavItem href="/ideas" icon={<Zap className="w-4 h-4 text-yellow-500" />}>Ideas</NavItem>
+              
+              {/* Ideas Dropdown */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-slate-600 dark:text-zinc-400 hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all duration-300 rounded-full flex items-center gap-2 px-5 cursor-pointer">
+                  <Zap className="w-4 h-4 text-yellow-500" />
+                  <span className="font-medium tracking-wide text-[12px] uppercase">Ideas</span>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="min-w-[220px] p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50">
+                  <div className="p-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 mb-1">Browse Categories</div>
+                  <div className="grid gap-1">
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <Link 
+                          key={cat.id} 
+                          href={`/ideas?categoryId=${cat.id}`}
+                          className="flex items-center gap-3 px-3 py-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors text-slate-700 dark:text-zinc-300 hover:text-sky-600 dark:hover:text-white group"
+                        >
+                          <Rocket className="w-3.5 h-3.5 text-sky-500 opacity-0 group-hover:opacity-100 transition-all" />
+                          <span className="text-sm font-medium">{cat.name}</span>
+                        </Link>
+                      ))
+                    ) : (
+                      <p className="p-3 text-xs text-slate-500">Loading categories...</p>
+                    )}
+                    <div className="h-px bg-slate-100 dark:bg-slate-800 my-1" />
+                    <Link 
+                      href="/ideas"
+                      className="flex items-center gap-3 px-3 py-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors text-sky-600 font-bold"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span className="text-sm">View All Ideas</span>
+                    </Link>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
               <NavItem href="/about" icon={<Info className="w-4 h-4 text-sky-500" />}>About</NavItem>
               <NavItem href="/contact" icon={<Mail className="w-4 h-4 text-indigo-500" />}>Contact Us</NavItem>
             </NavigationMenuList>

@@ -30,15 +30,20 @@ interface Idea {
 function IdeasContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
+  const initialCategory = searchParams.get("categoryId") || "";
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState(initialCategory || "all");
 
   useEffect(() => {
     const fetchIdeas = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:5000/api/ideas?searchTerm=${query}`);
+        const url = new URL("http://localhost:5000/api/ideas");
+        if (query) url.searchParams.append("searchTerm", query);
+        if (initialCategory) url.searchParams.append("categoryId", initialCategory);
+        
+        const response = await fetch(url.toString());
         const data = await response.json();
         if (data.success) {
           setIdeas(data.data);
@@ -51,11 +56,17 @@ function IdeasContent() {
     };
 
     fetchIdeas();
-  }, [query]);
+  }, [query, initialCategory]);
 
-  const filteredIdeas = activeTab === "all" 
+  // If there's an initial category, the backend already filtered it. 
+  // If the user uses the tabs, we filter locally or re-fetch.
+  // For now, let's keep the tabs as a local filter or sub-filter.
+  const filteredIdeas = activeTab === "all" || activeTab === initialCategory
     ? ideas 
-    : ideas.filter(idea => idea.category.name.toLowerCase().includes(activeTab.toLowerCase()));
+    : ideas.filter(idea => 
+        idea.category.name.toLowerCase().includes(activeTab.toLowerCase()) || 
+        idea.categoryId === activeTab
+      );
 
   return (
     <div className="max-w-7xl mx-auto py-12">
