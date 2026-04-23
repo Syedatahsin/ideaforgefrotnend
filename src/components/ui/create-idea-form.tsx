@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "./textarea";
 import { FieldLabel } from "@/components/ui/field";
 import { Loader2, Rocket, Lightbulb, DollarSign, Tags } from "lucide-react";
 
